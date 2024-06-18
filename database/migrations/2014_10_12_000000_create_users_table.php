@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('nome')->nullable();
+            $table->string('name')->nullable();
             $table->enum('tipo_documento', ['CPF','CRM','COREN','CNH']);
             $table->integer('numero_documento')->unique();
             $table->string('categoria_cnh')->nullable();
