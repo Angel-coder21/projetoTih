@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->enum('tipo_documento', ['CPF','CRM','COREN','CNH']);
-            $table->integer('numero_documento')->unique();
+            $table->enum('tipo_documento', ['CPF','CRM','COREN','CNH'])->nullable();
+            $table->integer('numero_documento')->unique()->nullable();
             $table->string('categoria_cnh')->nullable();
-            $table->enum('cargo', ['MEDICO','ENFERMEIRO','TECNICO ENFERMAGEM','NIR','BASE','CONDUTOR']);
+            $table->enum('cargo', ['MEDICO','ENFERMEIRO','TECNICO ENFERMAGEM','NIR','BASE','CONDUTOR'])->nullable();
             $table->integer('nivel')->nullable();
             $table->integer('status')->nullable();
             $table->string('contato_tel')->nullable();

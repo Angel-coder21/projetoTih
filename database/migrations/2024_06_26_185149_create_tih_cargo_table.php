@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('fk_unidade')->after('id')->nullable();
-
-            $table->foreign('fk_unidade')->references('id')->on('tih_unidade');
+        Schema::create('tih_cargo', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome_cargo',255)->nullable();
+            $table->timestamps();
         });
     }
 
@@ -27,8 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('tih_cargo');
     }
 };
