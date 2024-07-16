@@ -48,9 +48,7 @@ class Equipeviatura extends Resource
     public function fields(NovaRequest $request)
     {
 
-        $viaturas = \App\Models\viatura::all();
-
-        $tipo_viaturas =  $viaturas->pluck('nome', 'id')->all();
+        // $viaturas = \App\Models\viatura::all();
 
 
         return [
@@ -58,54 +56,41 @@ class Equipeviatura extends Resource
 
 
             Select::make('Viatura' , 'fk_viatura')
-            ->options([
-                '1' =>  'HOSPITAL',
-                '2' => 'UBS',
-                '3' => 'UPH',
-                '4' => 'UPA',
-            ])
+            ->searchable()
+            ->options(\App\Models\viatura::where('situacao',' 1')->get()->pluck('identificacao', 'id'))
+            ->displayUsingLabels()
             ->rules('required'),
 
             Select::make('Condutor' , 'fk_user_condutor')
-            ->options([
-                '1' =>  'HOSPITAL',
-                '2' => 'UBS',
-                '3' => 'UPH',
-                '4' => 'UPA',
-            ])
+            ->searchable()
+            ->options(\App\Models\User::get()->pluck('name', 'id'))
+            ->displayUsingLabels()            
             ->rules('required'),
 
             Select::make('Médico(a)' , 'fk_user_medico')
-            ->options([
-                '1' =>  'HOSPITAL',
-                '2' => 'UBS',
-                '3' => 'UPH',
-                '4' => 'UPA',
-            ]),
+            ->searchable()
+            ->options(\App\Models\User::get()->pluck('name', 'id'))
+            ->displayUsingLabels(),
 
             Select::make('Enfermeiro(a)' , 'fk_user_enfermeiro')
-            ->options([
-                '1' =>  'HOSPITAL',
-                '2' => 'UBS',
-                '3' => 'UPH',
-                '4' => 'UPA',
-            ]),
+            ->searchable()
+            ->options(\App\Models\User::get()->pluck('name', 'id'))
+            ->displayUsingLabels(),
 
             Select::make('Técnico(a) Enfermagem' , 'fk_user_tec_enfermagem')
-            ->options([
-                '1' =>  'HOSPITAL',
-                '2' => 'UBS',
-                '3' => 'UPH',
-                '4' => 'UPA',
-            ]),
+            ->searchable()
+            ->options(\App\Models\User::get()->pluck('name', 'id'))
+            ->displayUsingLabels(),
 
-            Date::make('Data','data'),
+            Date::make('Data','data')
+            ->rules('required'),
 
             Select::make('Status' , 'status')
             ->options([
                 '1' => 'Disponivel',
                 '2' => 'Indisponivel',
             ])
+            ->displayUsingLabels()
             ->rules('required'),
         ];
     }

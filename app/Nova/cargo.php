@@ -12,9 +12,9 @@ class cargo extends Resource
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\cargo>
+     * @var class-string<\App\Models\Cargo>
      */
-    public static $model = \App\Models\cargo::class;
+    public static $model = \App\Models\Cargo::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.

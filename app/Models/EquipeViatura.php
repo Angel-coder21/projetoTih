@@ -25,6 +25,6 @@ class EquipeViatura extends Model
     ];
 
     protected $casts = [
-        //
+        'data' => 'date'
      ];
 }

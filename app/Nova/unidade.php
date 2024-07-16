@@ -14,9 +14,9 @@ class unidade extends Resource
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\unidade>
+     * @var class-string<\App\Models\Unidade>
      */
-    public static $model = \App\Models\unidade::class;
+    public static $model = \App\Models\Unidade::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
