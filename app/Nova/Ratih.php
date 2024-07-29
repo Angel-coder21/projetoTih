@@ -1,4 +1,6 @@
 <?php
+// Radio Button
+// https://novapackages.com/packages/norman-huth/nova-radio-field
 
 namespace App\Nova;
 
@@ -14,6 +16,7 @@ use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use NormanHuth\NovaRadioField\Radio;
 
 class Ratih extends Resource
 {
@@ -48,12 +51,19 @@ class Ratih extends Resource
      */
     public function fields(NovaRequest $request)
     {
+
         return [
             ID::make()->sortable(),
 
-            Heading::make('Preenchimento da Unidade'),
+            Heading::make('Preenchimento do NIR'),
 
-            DateTime::make('Data Chamado','dt_chamado'),
+            
+            // Select::make('Status do Chamado','fk_status')
+            // ->searchable()
+            // ->options(\App\Models\Status::all()->pluck('nome', 'id'))
+            // ->displayUsingLabels(),
+
+            // DateTime::make('Data Chamado','dt_chamado'),
 
             Text::make('Número do Chamado' , 'numero_chamado')
             ->sortable()
@@ -70,27 +80,25 @@ class Ratih extends Resource
             Date::make('Data Nascimento','paciente_dt_nascimento')
             ,
 
-            Select::make('Sexo','paciente_sexo')
+            Radio::make(__('Sexo'), 'paciente_sexo')
             ->options([
-                'M' => 'Masculino',
-                'F' => 'Feminino',
-            ])
-            ,
+               'M' =>  __('Masculino'),
+               'F' =>  __('Feminino'),
+            ])->inline(),
 
-            Textarea::make('Hipótese Diagnóstica','hipotese_diagnostico')
+            Textarea::make('Hipótese Diagnóstico','hipotese_diagnostico')
             ->rows(3)
             ,
 
-            Select::make('Classificação de Risco','classificacao_risco')
+            Radio::make(__('Classificação de Risco'), 'classificacao_risco')
             ->options([
-                'Verde',
-                'Amarela',
-            ])
-            ,
+                 __('Verde'),
+                 __('Amarela'),
+            ])->inline(),
 
             Select::make('Unidade de Origem' , 'fk_unidade_origem')
             ->searchable()
-            ->options(\App\Models\Unidade::get()->pluck('nome', 'id'))
+            ->options(\App\Models\Unidade::all()->pluck('nome', 'id'))
             ->displayUsingLabels()            
             ,
 
@@ -108,24 +116,36 @@ class Ratih extends Resource
             ->sortable()
             ->rules('required', 'max:255'),
 
-            Select::make('Tipo de Viatura' , 'tipo_viatura')
+            Radio::make(__('Tipo de Viatura'), 'tipo_viatura')
             ->options([
-                'Básica' =>  'Basica',
-                'Avançada' => 'Avancado',
-            ])
-            ,
+                 __('Básica'),
+                 __('Avançada'),
+            ])->inline(),
 
             Textarea::make('Justificativa tipo de viatura','Justificativa_tipo_viatura')
-            ->rows(2)
-            ,
+            ->rows(2),
 
-            Boolean::make('Exame de Imagem','exame_imagem'),
+            Radio::make(__('Exame de Imagem'), 'exame_imagem')
+            ->options([
+                'False' =>  __('Não'),
+                'true' =>  __('Sim'),
+             ])->inline(),
 
-            Boolean::make('Avaliação','avaliacao'),
+            Radio::make(__('Avaliação'), 'avaliacao')
+            ->options([
+                'False' =>  __('Não'),
+                'true' =>  __('Sim'),
+             ])->inline(),
 
-            Boolean::make('Transferncia Internacao','transferencia_internacao'),
+            Radio::make(__('Transferência Internação'), 'transferencia_internacao')
+            ->options([
+                'False' =>  __('Não'),
+                'true' =>  __('Sim'),
+             ])->inline(),
 
-            Boolean::make('Outros','outros'),
+            Boolean::make('Outros','outros')
+            ->trueValue('true')
+            ->falseValue('False'),
 
             Textarea::make('Outras Anotações','outros_anotacao')
             ->rows(2)
@@ -151,7 +171,7 @@ class Ratih extends Resource
             ->sortable()
             ->rules('required', 'max:255'),
 
-            // Apartir daqui quem preencherá esse formulário é a equipe de Viatura
+            // Apartir daqui quem preencherá esse formulário é a equipe de Viatura - ORIGEM
             Heading::make('Preenchimento Equipe de Viatura (Unidade de Origem)'),
 
             Text::make('PA' , 'pa_origem')
@@ -186,21 +206,31 @@ class Ratih extends Resource
             ->rows(2)
             ,
 
-            Boolean::make('Ar Ambiente','ar_ambiente_origem'),
+            Radio::make(__('Ar Ambiente'), 'ar_ambiente_origem')
+            ->options([
+               'False' =>  __('Não'),
+               'true' =>  __('Sim'),
+            ])->inline(),
 
-            Boolean::make('Coletor Nasal','coletor_nasal_origem'),
+            Radio::make(__('Coletor Nasal'), 'coletor_nasal_origem')
+            ->options([
+               'False' =>  __('Não'),
+               'true' =>  __('Sim'),
+            ])->inline(),
 
             Textarea::make('Anotação Coletor Nasal','coletor_nasal_anotacao_origem')
             ->rows(2)
             ,
 
-            Boolean::make('Máscara de Alto Fluxo','mascara_alto_fluxo_origem'),
+            Boolean::make('Máscara de Alto Fluxo','mascara_alto_fluxo_origem')
+            ->trueValue('true')
+            ->falseValue('False'),
 
             Textarea::make('Anotação Máscara de Alto Fluxo','mascara_alto_fluxo_anotacao_origem')
             ->rows(2)
             ,
 
-            Select::make('Esforço Respiratorio' , 'esfoco_respiratorio_origem')
+            Select::make('Esforço Respiratório' , 'esfoco_respiratorio_origem')
             ->options([
                 'Sem Esforço',
                 'Leve',
@@ -209,7 +239,9 @@ class Ratih extends Resource
             ])
             ,
 
-            Boolean::make('Bomba Infusora','bomba_infusora_origem'),
+            Boolean::make('Bomba Infusora','bomba_infusora_origem')
+            ->trueValue('true')
+            ->falseValue('False'),
 
             Textarea::make('Bomba Infusora 1','bomba_infusora_med_1_origem')
             ->rows(2)
@@ -228,11 +260,463 @@ class Ratih extends Resource
             Textarea::make('Bomba Infusora 5','bomba_infusora_med_5_origem')
             ->rows(2),
 
-            Boolean::make('Paciente Entubado','paciente_entubado_origem'),
+            Boolean::make('Paciente Entubado','paciente_entubado_origem')
+            ->trueValue('true')
+            ->falseValue('False'),
 
-            Boolean::make('paciente_entubado_origem')
-            ->trueValue('4')
-            ->falseValue('0'),
+
+            Heading::make('Escala de Coma de Glasgow - Crianças abaixo de 4 anos'),
+
+            Radio::make(__('Abertura ocular'), 'glasgow_AO_menor_origem')
+            ->options([
+                '4' => __('Abertura ocular espontânio'),
+                '3' => __('Abertura ocular sob comando verbal'),
+                '2' => __('Abertura ocular sob estímulo dolorosa'),
+                '1' => __('Sem abertura ocular'),
+            ]),
+           
+            Radio::make(__('Melhor Resposta Verbal'), 'glasgow_rv_menor_origem')
+            ->options([
+                '5' => __('Palavras apropriadas, riso social, olhar fixo que segue objetos'),
+                '4' => __('Resposta Irritada'),
+                '3' => __('Chora de dor'),
+                '2' => __('Geme de dor'),
+                '1' => __('Sem resposta verbal'),
+            ]),            
+
+            Radio::make(__('Melhor resposta Motora'), 'glasgow_rm_menor_origem')
+            ->options([
+                '6' => __('Move-se espontaneamente e intencionalmente'),
+                '5' => __('Movimento de retirada em resposta ao toque'),
+                '4' => __('Movimento de retirada em resposta á dor'),
+                '3' => __('Postura decorticada(flexão anormal) em resposta á dor'),
+                '2' => __('Postura descerebrada(extensão anormal) em resposta á dor'),
+                '1' => __('Sem resposta motora'),
+            ]),
+
+            Heading::make('Escala de Coma de Glasgow - Adultos e crianças acima de 4 anos'),
+
+            Radio::make(__('Abertura ocular'), 'glasgow_AO_maior_origem')
+            ->options([
+                '4' => __('Abertura ocular espontânio'),
+                '3' => __('Abertura ocular sob comando verbal'),
+                '2' => __('Abertura ocular sob estímulo dolorosa'),
+                '1' => __('Sem abertura ocular'),
+            ]),
+
+            
+            Radio::make(__('Melhor Resposta Verbal'), 'glasgow_rv_maior_origem')
+            ->options([
+                '5' => __('Resposta Adequada(Orientada)'),
+                '4' => __('Resposta confusa'),
+                '3' => __('Resposta inapropriadas'),
+                '2' => __('Sons Incompreensíveis'),
+                '1' => __('Sem resposta verbal'),
+            ]),
+
+            
+            Radio::make(__('Melhor resposta Motora'), 'glasgow_rm_maior_origem')
+            ->options([
+                '6' => __('Obedece a comandos'),
+                '5' => __('Localiza estímulos dolorosos'),
+                '4' => __('Retira ao estímulo doloroso'),
+                '3' => __('Flexão anormal(decorticação)'),
+                '2' => __('Extensão anormal(descerebração)'),
+                '1' => __('Sem resposta motora'),
+            ]),
+
+            
+            Radio::make(__('Autorização de transferência'), 'autorizacao_transferencia_origem')
+            ->options([
+                 __('Não Tem'),
+                 __('Não Entregue'),
+                 __('Entregue'),                 
+            ])->inline(),
+
+            
+            Radio::make(__('Exames de Procedimentos'), 'exame_procedimentos_origem')
+            ->options([
+                __('Não Tem'),
+                __('Não Entregue'),
+                __('Entregue'), 
+            ])->inline(),
+
+           
+            Radio::make(__('Última Evolução'), 'ultima_evolucao_origem')
+            ->options([
+                __('Não Tem'),
+                __('Não Entregue'),
+                __('Entregue'), 
+            ])->inline(),
+
+            Radio::make(__('Última Prescrição'), 'ultima_prescricao_origem')
+            ->options([
+                __('Não Tem'),
+                __('Não Entregue'),
+                __('Entregue'), 
+            ])->inline(),
+
+            
+            Radio::make(__('Teste Covid'), 'teste_covid_origem')
+            ->options([
+                __('Não Tem'),
+                __('Não Entregue'),
+                __('Entregue'), 
+            ])->inline(),
+
+            Radio::make(__('Documento pessoal do paciente'), 'documento_pessoal_paciente_origem')
+            ->options([
+                __('Não Tem'),
+                __('Não Entregue'),
+                __('Entregue'), 
+            ])->inline(),
+
+            Radio::make(__('Exame laboratorial'), 'exame_laboratorial_origem')
+            ->options([
+                __('Não Tem'),
+                __('Não Entregue'),
+                __('Entregue'), 
+            ])->inline(),
+
+            Radio::make(__('Exame imagem'), 'exame_imagem_origem')
+            ->options([
+                __('Não Tem'),
+                __('Não Entregue'),
+                __('Entregue'), 
+            ])->inline(),
+
+            Radio::make(__('BAM de entrada'), 'bam_entrada_origem')
+            ->options([
+                __('Não Tem'),
+                __('Não Entregue'),
+                __('Entregue'), 
+            ])->inline(),
+
+            Radio::make(__('Outro documento'), 'outro_doc_origem')
+            ->options([
+                __('Não Tem'),
+                __('Não Entregue'),
+                __('Entregue'), 
+            ])->inline(),
+
+            Textarea::make('Obsevarções Gerais','obs_gerais_origem')
+            ->rows(2),
+
+             // Apartir daqui quem preencherá esse formulário é a equipe de Viatura - DESTINO
+             Heading::make('Preenchimento Equipe de Viatura (Unidade de Destino)'),
+
+             Text::make('PA' , 'pa_destino')
+             ->sortable()
+             ->rules('required', 'max:255'),
+ 
+             Text::make('X' , 'x_destino')
+             ->sortable()
+             ->rules('required', 'max:255'),
+ 
+             Text::make('FC' , 'fc_destino')
+             ->sortable()
+             ->rules('required', 'max:255'),
+ 
+             Text::make('FR' , 'fr_destino')
+             ->sortable()
+             ->rules('required', 'max:255'),
+ 
+             Text::make('SpO2 ' , 'spo2_destino')
+             ->sortable()
+             ->rules('required', 'max:255'),
+ 
+             Text::make('Glicemia' , 'glicemia_destino')
+             ->sortable()
+             ->rules('required', 'max:255'),
+ 
+             Text::make('Taxa' , 'taxa_destino')
+             ->sortable()
+             ->rules('required', 'max:255'),
+ 
+             Textarea::make('Anotação do Exame Físico','anotacoes_exame_fisico_destino')
+             ->rows(2)
+             ,
+ 
+             Radio::make(__('Ar Ambiente'), 'ar_ambiente_destino')
+             ->options([
+                'False' =>  __('Não'),
+                'true' =>  __('Sim'),
+             ])->inline(),
+ 
+             Radio::make(__('Coletor Nasal'), 'coletor_nasal_destino')
+             ->options([
+                'False' =>  __('Não'),
+                'true' =>  __('Sim'),
+             ])->inline(),
+ 
+             Textarea::make('Anotação Coletor Nasal','coletor_nasal_anotacao_destino')
+             ->rows(2)
+             ,
+ 
+             Boolean::make('Máscara de Alto Fluxo','mascara_alto_fluxo_destino')
+             ->trueValue('true')
+             ->falseValue('False'),
+ 
+             Textarea::make('Anotação Máscara de Alto Fluxo','mascara_alto_fluxo_anotacao_destino')
+             ->rows(2)
+             ,
+ 
+             Select::make('Esforço Respiratório' , 'esfoco_respiratorio_destino')
+             ->options([
+                 'Sem Esforço',
+                 'Leve',
+                 'Moderado',
+                 'Grave',
+             ])
+             ,
+ 
+             Boolean::make('Bomba Infusora','bomba_infusora_destino')
+             ->trueValue('true')
+             ->falseValue('False'),
+ 
+             Textarea::make('Bomba Infusora 1','bomba_infusora_med_1_destino')
+             ->rows(2)
+             ,
+ 
+             Textarea::make('Bomba Infusora 2','bomba_infusora_med_2_destino')
+             ->rows(2)
+             ,
+ 
+             Textarea::make('Bomba Infusora 3','bomba_infusora_med_3_destino')
+             ->rows(2),
+ 
+             Textarea::make('Bomba Infusora 4','bomba_infusora_med_4_destino')
+             ->rows(2),
+ 
+             Textarea::make('Bomba Infusora 5','bomba_infusora_med_5_destino')
+             ->rows(2),
+ 
+             Boolean::make('Paciente Entubado','paciente_entubado_destino')
+             ->trueValue('true')
+             ->falseValue('False'),
+ 
+ 
+             Heading::make('Escala de Coma de Glasgow - Crianças abaixo de 4 anos'),
+ 
+             Radio::make(__('Abertura ocular'), 'glasgow_AO_menor_destino')
+             ->options([
+                 '4' => __('Abertura ocular espontânio'),
+                 '3' => __('Abertura ocular sob comando verbal'),
+                 '2' => __('Abertura ocular sob estímulo dolorosa'),
+                 '1' => __('Sem abertura ocular'),
+             ]),
+            
+             Radio::make(__('Melhor Resposta Verbal'), 'glasgow_rv_menor_destino')
+             ->options([
+                 '5' => __('Palavras apropriadas, riso social, olhar fixo que segue objetos'),
+                 '4' => __('Resposta Irritada'),
+                 '3' => __('Chora de dor'),
+                 '2' => __('Geme de dor'),
+                 '1' => __('Sem resposta verbal'),
+             ]),            
+ 
+             Radio::make(__('Melhor resposta Motora'), 'glasgow_rm_menor_destino')
+             ->options([
+                 '6' => __('Move-se espontaneamente e intencionalmente'),
+                 '5' => __('Movimento de retirada em resposta ao toque'),
+                 '4' => __('Movimento de retirada em resposta á dor'),
+                 '3' => __('Postura decorticada(flexão anormal) em resposta á dor'),
+                 '2' => __('Postura descerebrada(extensão anormal) em resposta á dor'),
+                 '1' => __('Sem resposta motora'),
+             ]),
+ 
+             Heading::make('Escala de Coma de Glasgow - Adultos e crianças acima de 4 anos'),
+ 
+             Radio::make(__('Abertura ocular'), 'glasgow_AO_maior_destino')
+             ->options([
+                 '4' => __('Abertura ocular espontânio'),
+                 '3' => __('Abertura ocular sob comando verbal'),
+                 '2' => __('Abertura ocular sob estímulo dolorosa'),
+                 '1' => __('Sem abertura ocular'),
+             ]),
+ 
+             
+             Radio::make(__('Melhor Resposta Verbal'), 'glasgow_rv_maior_destino')
+             ->options([
+                 '5' => __('Resposta Adequada(Orientada)'),
+                 '4' => __('Resposta confusa'),
+                 '3' => __('Resposta inapropriadas'),
+                 '2' => __('Sons Incompreensíveis'),
+                 '1' => __('Sem resposta verbal'),
+             ]),
+ 
+             
+             Radio::make(__('Melhor resposta Motora'), 'glasgow_rm_maior_destino')
+             ->options([
+                 '6' => __('Obedece a comandos'),
+                 '5' => __('Localiza estímulos dolorosos'),
+                 '4' => __('Retira ao estímulo doloroso'),
+                 '3' => __('Flexão anormal(decorticação)'),
+                 '2' => __('Extensão anormal(descerebração)'),
+                 '1' => __('Sem resposta motora'),
+             ]),
+ 
+             // https://novapackages.com/packages/norman-huth/nova-radio-field
+             Radio::make(__('Autorização de transferência'), 'autorizacao_transferencia_destino')
+             ->options([
+                  __('Não Tem'),
+                  __('Não Entregue'),
+                  __('Entregue'),                 
+             ])->inline(),
+ 
+             
+             Radio::make(__('Exames de Procedimentos'), 'exame_procedimentos_destino')
+             ->options([
+                 __('Não Tem'),
+                 __('Não Entregue'),
+                 __('Entregue'), 
+             ])->inline(),
+ 
+            
+             Radio::make(__('Última Evolução'), 'ultima_evolucao_destino')
+             ->options([
+                 __('Não Tem'),
+                 __('Não Entregue'),
+                 __('Entregue'), 
+             ])->inline(),
+ 
+             Radio::make(__('Última Prescrição'), 'ultima_prescricao_destino')
+             ->options([
+                 __('Não Tem'),
+                 __('Não Entregue'),
+                 __('Entregue'), 
+             ])->inline(),
+ 
+             
+             Radio::make(__('Teste Covid'), 'teste_covid_destino')
+             ->options([
+                 __('Não Tem'),
+                 __('Não Entregue'),
+                 __('Entregue'), 
+             ])->inline(),
+ 
+             Radio::make(__('Documento pessoal do paciente'), 'documento_pessoal_paciente_destino')
+             ->options([
+                 __('Não Tem'),
+                 __('Não Entregue'),
+                 __('Entregue'), 
+             ])->inline(),
+ 
+             Radio::make(__('Exame laboratorial'), 'exame_laboratorial_destino')
+             ->options([
+                 __('Não Tem'),
+                 __('Não Entregue'),
+                 __('Entregue'), 
+             ])->inline(),
+ 
+             Radio::make(__('Exame imagem'), 'exame_imagem_destino')
+             ->options([
+                 __('Não Tem'),
+                 __('Não Entregue'),
+                 __('Entregue'), 
+             ])->inline(),
+ 
+             Radio::make(__('BAM de entrada'), 'bam_entrada_destino')
+             ->options([
+                 __('Não Tem'),
+                 __('Não Entregue'),
+                 __('Entregue'), 
+             ])->inline(),
+ 
+             Radio::make(__('Outro documento'), 'outro_doc_destino')
+             ->options([
+                 __('Não Tem'),
+                 __('Não Entregue'),
+                 __('Entregue'), 
+             ])->inline(),
+ 
+             Textarea::make('Obsevarções Gerais','obs_gerais_destino')
+             ->rows(2),
+
+             Radio::make(__('Intercorrencia'), 'intercorrencia_destino')
+             ->options([
+                 __('Não Realizado'),
+                 __('Intercorrencia'),
+                 __('Realizada'), 
+             ])->inline(),
+ 
+             Textarea::make('Anotação Motivo de intercorrência','intercorrencia_motivo_anotacao_destino')
+             ->rows(2),
+
+             Select::make('Equipe de Viatura' , 'fk_tih_equipe_viatura')
+            ->searchable()
+            ->options(\App\Models\EquipeViatura::all()->pluck('id'))
+            ->displayUsingLabels()            
+            ,
+
+
+            Heading::make('Registro Saída da Base'),
+
+            DateTime::make('Registro hora','dt_rh_saida_base'),
+
+            Select::make('Colaborador responsável' , 'fk_user_rh_saida_base')
+            ->searchable()
+            ->options(\App\Models\User::all()->pluck('name','id'))
+            ->displayUsingLabels()            
+            ,
+
+            Heading::make('Registro chegada a unidade de Origem'),
+
+            DateTime::make('Registro hora','dt_rh_unidade_origem'),
+
+            Select::make('Colaborador responsável' , 'fk_user_rh_unidade_origem')
+            ->searchable()
+            ->options(\App\Models\User::all()->pluck('name','id'))
+            ->displayUsingLabels()            
+            ,
+
+            Heading::make('Registro saída a unidade de Origem'),
+
+            DateTime::make('Registro hora','dt_rh_saida_unidade_origem'),
+
+            Select::make('Colaborador responsável' , 'fk_user_rh_saida_unidade_origem')
+            ->searchable()
+            ->options(\App\Models\User::all()->pluck('name','id'))
+            ->displayUsingLabels()            
+            ,
+
+            Heading::make('Registro chegada a unidade de destino'),
+
+            DateTime::make('Registro hora','dt_rh_chegada_unidade_destino'),
+
+            Select::make('Colaborador responsável' , 'fk_user_rh_chegada_unidade_destino')
+            ->searchable()
+            ->options(\App\Models\User::all()->pluck('name','id'))
+            ->displayUsingLabels()            
+            ,
+
+            Heading::make('Registro saída a unidade de destino'),
+
+            DateTime::make('Registro hora','dt_rh_saida_unidade_destino'),
+
+            Select::make('Colaborador responsável' , 'fk_user_rh_saida_unidade_destino')
+            ->searchable()
+            ->options(\App\Models\User::all()->pluck('name','id'))
+            ->displayUsingLabels()            
+            ,
+
+            Heading::make('Registro chegada na base'),
+
+            DateTime::make('Registro hora','dt_rh_chegada_base'),
+
+            Select::make('Colaborador responsável' , 'fk_user_rh_chegada_base')
+            ->searchable()
+            ->options(\App\Models\User::all()->pluck('name','id'))
+            ->displayUsingLabels()            
+            ,
+
+
+
+
+
+
+            
+
 
 
           

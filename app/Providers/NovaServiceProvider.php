@@ -2,6 +2,19 @@
 
 namespace App\Providers;
 
+
+use App\Nova\Status;
+use App\Nova\Viatura;
+use App\Nova\Unidade;
+use App\Nova\User;
+use App\Nova\Ratih;
+use App\Nova\EquipeViatura;
+use App\Nova\Cargo;
+use Illuminate\Http\Request;
+use Laravel\Nova\Dashboards\Main;
+use Laravel\Nova\Menu\Menu;
+use Laravel\Nova\Menu\MenuItem;
+use Laravel\Nova\Menu\MenuSection;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
@@ -16,7 +29,29 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+
+        Nova::mainMenu(function (Request $request) {
+            return [
+                // MenuSection::dashboard(Main::class)->icon('chart-bar'),
+
+                MenuSection::make('NIR', [
+                    MenuItem::resource(User::class),
+                    MenuItem::resource(Ratih::class),
+                    MenuItem::resource(Unidade::class),
+                ])->icon('home')->collapsable(),
+
+                MenuSection::make('TIH', [
+                    MenuItem::resource(Ratih::class),
+                    MenuItem::resource(Viatura::class),
+                    MenuItem::resource(EquipeViatura::class),
+                    MenuItem::resource(Unidade::class),
+                    MenuItem::resource(Cargo::class),
+                    MenuItem::resource(User::class),
+                ])->icon('truck')->collapsable(),
+            ];
+        });
     }
+    
 
     /**
      * Register the Nova routes.
