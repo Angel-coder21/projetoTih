@@ -56,18 +56,17 @@ class viatura extends Resource
 
             Text::make('Identificação' , 'identificacao')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules('max:255'),
 
             Text::make('Placa' , 'placa')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules('max:255'),
 
             Select::make('Tipo' , 'tipo')
             ->options([
                 'Básica' =>  'Basica',
                 'Avançada' => 'Avancado',
-            ])
-            ->rules('required'),
+            ]),
         ];
     }
 

@@ -96,6 +96,12 @@ return new class extends Migration
             $table->String('mascara_alto_fluxo_anotacao_destino',255)->nullable();
             $table->enum('esfoco_respiratorio_destino',['Sem Esforço','Leve','Moderado','Grave'])->nullable();
             $table->enum('bomba_infusora_destino',['true','false'])->nullable();
+            $table->longText('bomba_infusora_med_1_destino')->nullable();
+            $table->longText('bomba_infusora_med_2_destino')->nullable();
+            $table->longText('bomba_infusora_med_3_destino')->nullable();
+            $table->longText('bomba_infusora_med_4_destino')->nullable();
+            $table->longText('bomba_infusora_med_5_destino')->nullable();
+            $table->enum('paciente_entubado_destino',['true','false'])->nullable();
             $table->integer('glasgow_AO_menor_destino')->nullable();
             $table->integer('glasgow_rv_menor_destino')->nullable();
             $table->integer('glasgow_rm_menor_destino')->nullable();

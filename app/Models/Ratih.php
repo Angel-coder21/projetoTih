@@ -91,6 +91,11 @@ class Ratih extends Model
         'mascara_alto_fluxo_anotacao_destino',
         'esfoco_respiratorio_destino',
         'bomba_infusora_destino',
+        'bomba_infusora_med_1_destino',
+        'bomba_infusora_med_2_destino',
+        'bomba_infusora_med_3_destino',
+        'bomba_infusora_med_4_destino',
+        'bomba_infusora_med_5_destino',
         'glasgow_AO_menor_destino',
         'glasgow_rv_menor_destino',
         'glasgow_rm_menor_destino',
@@ -134,6 +139,14 @@ class Ratih extends Model
 
     protected $casts = [
         'paciente_dt_nascimento' => 'date',
-        'dt_chamado' => 'dateTime',
+        'dt_chamado' => 'datetime',
+        'dt_rh_saida_base' => 'datetime',
+        'dt_rh_unidade_origem' => 'datetime',
+        'dt_rh_saida_unidade_origem' => 'datetime',
+        'dt_rh_chegada_unidade_destino' => 'datetime',
+        'dt_rh_saida_unidade_destino' => 'datetime',
+        'dt_rh_chegada_base' => 'datetime',
+
+        
      ];
 }

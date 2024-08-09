@@ -17,12 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->enum('tipo_documento', ['CPF','CRM','COREN','CNH'])->nullable();
-            $table->integer('numero_documento')->unique()->nullable();
-            $table->string('categoria_cnh')->nullable();
+            $table->string('numero_documento','255')->nullable();
+            $table->string('categoria_cnh','255')->nullable();
             $table->enum('cargo', ['MEDICO','ENFERMEIRO','TECNICO ENFERMAGEM','NIR','BASE','CONDUTOR'])->nullable();
-            $table->integer('nivel')->nullable();
             $table->integer('status')->nullable();
-            $table->string('contato_tel')->nullable();
+            $table->string('contato_tel','255')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

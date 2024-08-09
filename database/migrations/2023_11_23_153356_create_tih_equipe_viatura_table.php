@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('tih_equipe_viatura', function (Blueprint $table) {
             $table->id();
+            $table->String('equipe_viatura',255)->nullable();
             $table->unsignedBigInteger('fk_viatura')->nullable();
             $table->unsignedBigInteger('fk_user_condutor')->nullable();
             $table->unsignedBigInteger('fk_user_medico')->nullable();

@@ -10,6 +10,7 @@ class EquipeViatura extends Model
     // use HasFactory;
     protected $table = 'tih_equipe_viatura';
     protected $fillable = [
+        'equipe_viatura',
         'fk_viatura',
         'fk_user_condutor',
         'fk_user_medico',

@@ -54,18 +54,19 @@ class Equipeviatura extends Resource
         return [
             ID::make()->sortable(),
 
+            Text::make('Equipe','equipe_viatura')
+            ->sortable()
+            ->rules('max:255'),
 
             Select::make('Viatura' , 'fk_viatura')
             ->searchable()
             ->options(\App\Models\viatura::where('situacao',' 1')->get()->pluck('identificacao', 'id'))
-            ->displayUsingLabels()
-            ->rules('required'),
+            ->displayUsingLabels(),
 
             Select::make('Condutor' , 'fk_user_condutor')
             ->searchable()
             ->options(\App\Models\User::get()->pluck('name', 'id'))
-            ->displayUsingLabels()            
-            ->rules('required'),
+            ->displayUsingLabels(),
 
             Select::make('Médico(a)' , 'fk_user_medico')
             ->searchable()
@@ -82,16 +83,14 @@ class Equipeviatura extends Resource
             ->options(\App\Models\User::get()->pluck('name', 'id'))
             ->displayUsingLabels(),
 
-            Date::make('Data','data')
-            ->rules('required'),
+            Date::make('Data','data'),
 
             Select::make('Status' , 'status')
             ->options([
                 '1' => 'Disponivel',
                 '2' => 'Indisponivel',
             ])
-            ->displayUsingLabels()
-            ->rules('required'),
+            ->displayUsingLabels(),
         ];
     }
 

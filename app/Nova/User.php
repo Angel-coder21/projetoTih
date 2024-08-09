@@ -8,6 +8,9 @@ use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
+use NormanHuth\NovaRadioField\Radio;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -25,6 +28,11 @@ class User extends Resource
      * @var string
      */
     public static $title = 'name';
+
+    public static function label()
+    {
+        return 'Usuários';
+    }
 
     /**
      * The columns that should be searched.
@@ -46,11 +54,35 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Gravatar::make()->maxWidth(50),
+            // Gravatar::make()->maxWidth(50),
 
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+            Text::make('Nome','name')
+            ->sortable()
+            ->rules('max:255'),
+
+            Select::make('Unidade' , 'fk_unidade')
+            ->searchable()
+            ->options(\App\Models\Unidade::all()->pluck('nome', 'id'))
+            ->displayUsingLabels(),
+
+            Select::make('Cargo' , 'fk_cargo')
+            ->searchable()
+            ->options(\App\Models\Cargo::all()->pluck('nome_cargo', 'id'))
+            ->displayUsingLabels(),
+
+            Radio::make(__('Documento'), 'tipo_documento')
+            ->options([
+               'CPF' => __('CPF'),
+               'CRM' => __('CRM'),
+               'COREN' => __('COREN'),
+               'CNH' => __('CNH'),
+            ])->inline(),
+
+            text::make('Número de Registro','numero_documento')
+            ->sortable(),
+
+            Number::make('Número Contato','contato_tel')
+            ->sortable(),
 
             Text::make('Email')
                 ->sortable()
@@ -62,6 +94,12 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
+
+            Radio::make(__('Status'), 'status')
+            ->options([
+               '1' =>  __('Ativado'),
+               '0' =>  __('Desativado'),
+            ])->inline(),
         ];
     }
 

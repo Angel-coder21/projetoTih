@@ -52,32 +52,31 @@ class unidade extends Resource
                 'UBS' => 'UBS',
                 'UPH' => 'UPH',
                 'UPA' => 'UPA',
-            ])
-            ->rules('required'),
+            ]),
 
             Text::make('Nome' , 'nome')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules('max:255'),
 
             Text::make('Endereço' , 'endereco')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules('max:255'),
 
             Text::make('Número' , 'numero')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules('max:255'),
 
             Text::make('Bairro' , 'bairro')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules('max:255'),
 
             Text::make('Município' , 'municipio')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules('max:255'),
 
             Text::make('Telefone' , 'contato_tel')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules('max:255'),
 
             Email::make('E-mail' , 'contato_email'),
         ];

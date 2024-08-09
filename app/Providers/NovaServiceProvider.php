@@ -34,11 +34,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             return [
                 // MenuSection::dashboard(Main::class)->icon('chart-bar'),
 
-                MenuSection::make('NIR', [
-                    MenuItem::resource(User::class),
-                    MenuItem::resource(Ratih::class),
-                    MenuItem::resource(Unidade::class),
-                ])->icon('home')->collapsable(),
+                // MenuSection::make('NIR', [
+                //     MenuItem::resource(User::class),
+                //     MenuItem::resource(Ratih::class),
+                //     MenuItem::resource(Unidade::class),
+                // ])->icon('home')->collapsable(),
 
                 MenuSection::make('TIH', [
                     MenuItem::resource(Ratih::class),

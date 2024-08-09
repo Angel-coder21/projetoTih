@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ea7dcc83ca7d79037fd036b7bdb1b0aa",
+    "content-hash": "7c8941a57d217fb900a869a448d2af3d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4042,6 +4042,59 @@
                 }
             ],
             "time": "2024-06-03T08:00:43+00:00"
+        },
+        {
+            "name": "shuvroroy/nova-tabs",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/shuvroroy/nova-tabs.git",
+                "reference": "77aa47e287f3dd6ada66100d812ccee3bf056da4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/shuvroroy/nova-tabs/zipball/77aa47e287f3dd6ada66100d812ccee3bf056da4",
+                "reference": "77aa47e287f3dd6ada66100d812ccee3bf056da4",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "^4.12",
+                "php": "^8.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ShuvroRoy\\NovaTabs\\TabsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ShuvroRoy\\NovaTabs\\": "src/",
+                    "ShuvroRoy\\NovaTabs\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Shuvro Roy",
+                    "email": "shuvro.nsu.cse@gmail.com"
+                }
+            ],
+            "description": "A tool for Laravel Nova which allows you to create tabs in your resource detail & form page.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/shuvroroy/nova-tabs/issues",
+                "source": "https://github.com/shuvroroy/nova-tabs/tree/v1.1.1"
+            },
+            "time": "2023-11-15T16:05:24+00:00"
         },
         {
             "name": "spatie/once",

@@ -17,9 +17,14 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use NormanHuth\NovaRadioField\Radio;
+use ShuvroRoy\NovaTabs\Tab;
+use ShuvroRoy\NovaTabs\Tabs;
+use ShuvroRoy\NovaTabs\Traits\HasActionsInTabs;
+use ShuvroRoy\NovaTabs\Traits\HasTabs;
 
 class Ratih extends Resource
 {
+    use HasTabs, HasActionsInTabs;
     /**
      * The model the resource corresponds to.
      *
@@ -43,6 +48,8 @@ class Ratih extends Resource
         'id',
     ];
 
+    
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -53,6 +60,8 @@ class Ratih extends Resource
     {
 
         return [
+            Tabs::make('Ratih', [
+                Tab::make(__('Nir'), [
             ID::make()->sortable(),
 
             Heading::make('Preenchimento do NIR'),
@@ -67,18 +76,19 @@ class Ratih extends Resource
 
             Text::make('Número do Chamado' , 'numero_chamado')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules( 'max:255'),
 
             Text::make('Nome do Paciente' , 'paciente_nome')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules( 'max:255'),
 
             Text::make('Prontuário do Paciente' , 'paciente_prontuario')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules( 'max:255')
+            ->hideFromIndex(),
             
             Date::make('Data Nascimento','paciente_dt_nascimento')
-            ,
+            ->hideFromIndex(),
 
             Radio::make(__('Sexo'), 'paciente_sexo')
             ->options([
@@ -92,8 +102,8 @@ class Ratih extends Resource
 
             Radio::make(__('Classificação de Risco'), 'classificacao_risco')
             ->options([
-                 __('Verde'),
-                 __('Amarela'),
+                'Verde' => __('Verde'),
+                'Amarela' => __('Amarela'),
             ])->inline(),
 
             Select::make('Unidade de Origem' , 'fk_unidade_origem')
@@ -104,7 +114,7 @@ class Ratih extends Resource
 
             Text::make('Setor de Origem' , 'setor_origem')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules( 'max:255'),
 
             Select::make('Unidade de Destino' , 'fk_unidade_destino')
             ->searchable()
@@ -114,12 +124,12 @@ class Ratih extends Resource
 
             Text::make('Setor de Destino' , 'setor_destino')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules( 'max:255'),
 
             Radio::make(__('Tipo de Viatura'), 'tipo_viatura')
             ->options([
-                 __('Básica'),
-                 __('Avançada'),
+                'Básica'=> __('Básica'),
+                 'Avançada'=>__('Avançada'),
             ])->inline(),
 
             Textarea::make('Justificativa tipo de viatura','Justificativa_tipo_viatura')
@@ -139,13 +149,13 @@ class Ratih extends Resource
 
             Radio::make(__('Transferência Internação'), 'transferencia_internacao')
             ->options([
-                'False' =>  __('Não'),
-                'true' =>  __('Sim'),
+                'False'=>__('Não'),
+                'true'=>__('Sim'),
              ])->inline(),
 
             Boolean::make('Outros','outros')
             ->trueValue('true')
-            ->falseValue('False'),
+            ->falseValue('false'),
 
             Textarea::make('Outras Anotações','outros_anotacao')
             ->rows(2)
@@ -153,54 +163,150 @@ class Ratih extends Resource
 
             Text::make('Nome do Médico Solicitante' , 'medico_solicitante_nome')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules( 'max:255'),
 
             Number::make('CRM do Médico Solicitante' , 'medico_solicitante_crm')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules( 'max:255'),
 
             Text::make('Nome do Autorizador' , 'autorizacao_nome')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules( 'max:255'),
 
             Text::make('Função do Autorizador' , 'autorizacao_funcao')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules( 'max:255'),
 
             Number::make('Número de Matrícula do Autorizador' , 'autorizacao_matricula')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules( 'max:255'),
 
+            ]),
+
+            Tab::make(__('Equipe de Viatura'), [
+
+                Select::make('Equipe de Viatura' , 'fk_tih_equipe_viatura')
+               ->searchable()
+               ->options(\App\Models\EquipeViatura::all()->pluck('equipe_viatura','id'))
+               ->displayUsingLabels()            
+               ,
+   
+   
+               Heading::make('Registro Saída da Base'),
+   
+               DateTime::make('Registro hora','dt_rh_saida_base'),
+   
+               Select::make('Colaborador responsável' , 'fk_user_rh_saida_base')
+               ->searchable()
+               ->options(\App\Models\User::all()->pluck('name','id'))
+               ->displayUsingLabels()            
+               ,
+   
+               Heading::make('Registro chegada a unidade de Origem'),
+   
+                DateTime::make('Registro hora','dt_rh_unidade_origem'),
+    
+                Select::make('Colaborador responsável' , 'fk_user_rh_unidade_origem')
+                ->searchable()
+                ->options(\App\Models\User::all()->pluck('name','id'))
+                ->displayUsingLabels()            
+                ,
+
+                Heading::make('Registro saída a unidade de Origem'),
+
+                DateTime::make('Registro hora','dt_rh_saida_unidade_origem'),
+                Select::make('Colaborador responsável' , 'fk_user_rh_saida_unidade_origem')
+                ->searchable()
+                ->options(\App\Models\User::all()->pluck('name','id'))
+                ->displayUsingLabels()            
+                ,
+
+   
+               Heading::make('Registro chegada a unidade de destino'),
+   
+               DateTime::make('Registro hora','dt_rh_chegada_unidade_destino'),
+   
+               Select::make('Colaborador responsável' , 'fk_user_rh_chegada_unidade_destino')
+               ->searchable()
+               ->options(\App\Models\User::all()->pluck('name','id'))
+               ->displayUsingLabels()            
+               ,
+   
+               Heading::make('Registro saída a unidade de destino'),
+   
+               DateTime::make('Registro hora','dt_rh_saida_unidade_destino'),
+   
+               Select::make('Colaborador responsável' , 'fk_user_rh_saida_unidade_destino')
+               ->searchable()
+               ->options(\App\Models\User::all()->pluck('name','id'))
+               ->displayUsingLabels()            
+               ,
+   
+               Heading::make('Registro chegada na base'),
+   
+               DateTime::make('Registro hora','dt_rh_chegada_base'),
+   
+               Select::make('Colaborador responsável' , 'fk_user_rh_chegada_base')
+               ->searchable()
+               ->options(\App\Models\User::all()->pluck('name','id'))
+               ->displayUsingLabels()            
+               ,
+   
+   
+               ]),
+
+            Tab::make(__('Unidade de Origem'), [ 
             // Apartir daqui quem preencherá esse formulário é a equipe de Viatura - ORIGEM
-            Heading::make('Preenchimento Equipe de Viatura (Unidade de Origem)'),
+
+            // Heading::make('Registro chegada a unidade de Origem'),
+   
+            // DateTime::make('Registro hora','dt_rh_unidade_origem'),
+   
+            // Select::make('Colaborador responsável' , 'fk_user_rh_unidade_origem')
+            // ->searchable()
+            // ->options(\App\Models\User::all()->pluck('name','id'))
+            // ->displayUsingLabels()            
+            // ,
+
+            // Heading::make('Registro saída a unidade de Origem'),
+
+            // DateTime::make('Registro hora','dt_rh_saida_unidade_origem'),
+
+            // Select::make('Colaborador responsável' , 'fk_user_rh_saida_unidade_origem')
+            // ->searchable()
+            // ->options(\App\Models\User::all()->pluck('name','id'))
+            // ->displayUsingLabels()            
+            // ,
+
+            Heading::make('Estado do Paciênte'),
 
             Text::make('PA' , 'pa_origem')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules( 'max:255'),
 
             Text::make('X' , 'x_origem')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules( 'max:255'),
 
             Text::make('FC' , 'fc_origem')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules( 'max:255'),
 
             Text::make('FR' , 'fr_origem')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules( 'max:255'),
 
             Text::make('SpO2 ' , 'spo2_origem')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules( 'max:255'),
 
             Text::make('Glicemia' , 'glicemia_origem')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules( 'max:255'),
 
             Text::make('Taxa' , 'taxa_origem')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules( 'max:255'),
 
             Textarea::make('Anotação do Exame Físico','anotacoes_exame_fisico_origem')
             ->rows(2)
@@ -224,7 +330,7 @@ class Ratih extends Resource
 
             Boolean::make('Máscara de Alto Fluxo','mascara_alto_fluxo_origem')
             ->trueValue('true')
-            ->falseValue('False'),
+            ->falseValue('false'),
 
             Textarea::make('Anotação Máscara de Alto Fluxo','mascara_alto_fluxo_anotacao_origem')
             ->rows(2)
@@ -262,7 +368,7 @@ class Ratih extends Resource
 
             Boolean::make('Paciente Entubado','paciente_entubado_origem')
             ->trueValue('true')
-            ->falseValue('False'),
+            ->falseValue('false'),
 
 
             Heading::make('Escala de Coma de Glasgow - Crianças abaixo de 4 anos'),
@@ -402,36 +508,38 @@ class Ratih extends Resource
             Textarea::make('Obsevarções Gerais','obs_gerais_origem')
             ->rows(2),
 
+            ]),
+       
+            Tab::make(__('Unidade de Destino'), [
              // Apartir daqui quem preencherá esse formulário é a equipe de Viatura - DESTINO
-             Heading::make('Preenchimento Equipe de Viatura (Unidade de Destino)'),
 
              Text::make('PA' , 'pa_destino')
              ->sortable()
-             ->rules('required', 'max:255'),
+             ->rules( 'max:255'),
  
              Text::make('X' , 'x_destino')
              ->sortable()
-             ->rules('required', 'max:255'),
+             ->rules( 'max:255'),
  
              Text::make('FC' , 'fc_destino')
              ->sortable()
-             ->rules('required', 'max:255'),
+             ->rules( 'max:255'),
  
              Text::make('FR' , 'fr_destino')
              ->sortable()
-             ->rules('required', 'max:255'),
+             ->rules( 'max:255'),
  
              Text::make('SpO2 ' , 'spo2_destino')
              ->sortable()
-             ->rules('required', 'max:255'),
+             ->rules( 'max:255'),
  
              Text::make('Glicemia' , 'glicemia_destino')
              ->sortable()
-             ->rules('required', 'max:255'),
+             ->rules( 'max:255'),
  
              Text::make('Taxa' , 'taxa_destino')
              ->sortable()
-             ->rules('required', 'max:255'),
+             ->rules( 'max:255'),
  
              Textarea::make('Anotação do Exame Físico','anotacoes_exame_fisico_destino')
              ->rows(2)
@@ -472,7 +580,7 @@ class Ratih extends Resource
  
              Boolean::make('Bomba Infusora','bomba_infusora_destino')
              ->trueValue('true')
-             ->falseValue('False'),
+             ->falseValue('false'),
  
              Textarea::make('Bomba Infusora 1','bomba_infusora_med_1_destino')
              ->rows(2)
@@ -493,7 +601,7 @@ class Ratih extends Resource
  
              Boolean::make('Paciente Entubado','paciente_entubado_destino')
              ->trueValue('true')
-             ->falseValue('False'),
+             ->falseValue('false'),
  
  
              Heading::make('Escala de Coma de Glasgow - Crianças abaixo de 4 anos'),
@@ -643,75 +751,10 @@ class Ratih extends Resource
              Textarea::make('Anotação Motivo de intercorrência','intercorrencia_motivo_anotacao_destino')
              ->rows(2),
 
-             Select::make('Equipe de Viatura' , 'fk_tih_equipe_viatura')
-            ->searchable()
-            ->options(\App\Models\EquipeViatura::all()->pluck('id'))
-            ->displayUsingLabels()            
-            ,
+            ]),
 
-
-            Heading::make('Registro Saída da Base'),
-
-            DateTime::make('Registro hora','dt_rh_saida_base'),
-
-            Select::make('Colaborador responsável' , 'fk_user_rh_saida_base')
-            ->searchable()
-            ->options(\App\Models\User::all()->pluck('name','id'))
-            ->displayUsingLabels()            
-            ,
-
-            Heading::make('Registro chegada a unidade de Origem'),
-
-            DateTime::make('Registro hora','dt_rh_unidade_origem'),
-
-            Select::make('Colaborador responsável' , 'fk_user_rh_unidade_origem')
-            ->searchable()
-            ->options(\App\Models\User::all()->pluck('name','id'))
-            ->displayUsingLabels()            
-            ,
-
-            Heading::make('Registro saída a unidade de Origem'),
-
-            DateTime::make('Registro hora','dt_rh_saida_unidade_origem'),
-
-            Select::make('Colaborador responsável' , 'fk_user_rh_saida_unidade_origem')
-            ->searchable()
-            ->options(\App\Models\User::all()->pluck('name','id'))
-            ->displayUsingLabels()            
-            ,
-
-            Heading::make('Registro chegada a unidade de destino'),
-
-            DateTime::make('Registro hora','dt_rh_chegada_unidade_destino'),
-
-            Select::make('Colaborador responsável' , 'fk_user_rh_chegada_unidade_destino')
-            ->searchable()
-            ->options(\App\Models\User::all()->pluck('name','id'))
-            ->displayUsingLabels()            
-            ,
-
-            Heading::make('Registro saída a unidade de destino'),
-
-            DateTime::make('Registro hora','dt_rh_saida_unidade_destino'),
-
-            Select::make('Colaborador responsável' , 'fk_user_rh_saida_unidade_destino')
-            ->searchable()
-            ->options(\App\Models\User::all()->pluck('name','id'))
-            ->displayUsingLabels()            
-            ,
-
-            Heading::make('Registro chegada na base'),
-
-            DateTime::make('Registro hora','dt_rh_chegada_base'),
-
-            Select::make('Colaborador responsável' , 'fk_user_rh_chegada_base')
-            ->searchable()
-            ->options(\App\Models\User::all()->pluck('name','id'))
-            ->displayUsingLabels()            
-            ,
-
-
-
+           
+        ]),
 
 
 

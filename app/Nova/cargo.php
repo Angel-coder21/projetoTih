@@ -45,7 +45,7 @@ class cargo extends Resource
 
             Text::make('Nome do Cargo' , 'nome_cargo')
             ->sortable()
-            ->rules('required', 'max:255'),
+            ->rules('max:255'),
         ];
     }
 
