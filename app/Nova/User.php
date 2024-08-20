@@ -97,8 +97,8 @@ class User extends Resource
 
             Radio::make(__('Status'), 'status')
             ->options([
-               '1' =>  __('Ativado'),
-               '0' =>  __('Desativado'),
+               '1'=>__('Ativado'),
+               '0'=>__('Desativado'),
             ])->inline(),
         ];
     }
