@@ -18,6 +18,7 @@ use Laravel\Nova\Menu\MenuSection;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Illuminate\Support\Facades\Blade;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -29,6 +30,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+
+        Nova::footer(function ($request) {
+            return Blade::render('
+               Desenvolvido por: <a href="https://duquedecaxias.rj.gov.br/secretaria/governo/6329" target="_blank"><strong style="color: blue;">Secretaria de Governo / Subsecretaria de Tecnologia</strong></a>
+           '); 
+       
+       });
 
         Nova::mainMenu(function (Request $request) {
             return [
@@ -101,7 +109,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function tools()
     {
-        return [];
+        return [
+            (new \Sereny\NovaPermissions\NovaPermissions())->canSee(function ($request) {
+                return $request->user()->isAdmin();
+            }),
+        ];
     }
 
     /**

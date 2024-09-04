@@ -12,6 +12,7 @@ use Laravel\Nova\Fields\Select;
 use NormanHuth\NovaRadioField\Radio;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\MorphToMany;
 
 class User extends Resource
 {
@@ -94,6 +95,9 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
+
+            MorphToMany::make('Roles', 'roles', \Sereny\NovaPermissions\Nova\Role::class),
+            MorphToMany::make('Permissions', 'permissions', \Sereny\NovaPermissions\Nova\Permission::class),
 
             Radio::make(__('Status'), 'status')
             ->options([
