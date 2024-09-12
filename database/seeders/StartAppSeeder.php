@@ -16,13 +16,11 @@ class StartAppSeeder extends Seeder
      */
     public function run()
     {
-         
 
-        // Criando o papel (role)
         $role = Role::firstOrCreate(
             ['name' => 'super-admin'],
             ['guard_name' => 'web']
-        );
+        );              
 
         // Criando ou recuperando o usuário
         $user = User::firstOrCreate(

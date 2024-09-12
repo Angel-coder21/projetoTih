@@ -38,26 +38,26 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
        
        });
 
-        Nova::mainMenu(function (Request $request) {
-            return [
-                // MenuSection::dashboard(Main::class)->icon('chart-bar'),
+        // Nova::mainMenu(function (Request $request) {
+        //     return [
+        //         // MenuSection::dashboard(Main::class)->icon('chart-bar'),
 
-                // MenuSection::make('NIR', [
-                //     MenuItem::resource(User::class),
-                //     MenuItem::resource(Ratih::class),
-                //     MenuItem::resource(Unidade::class),
-                // ])->icon('home')->collapsable(),
+        //         // MenuSection::make('NIR', [
+        //         //     MenuItem::resource(User::class),
+        //         //     MenuItem::resource(Ratih::class),
+        //         //     MenuItem::resource(Unidade::class),
+        //         // ])->icon('home')->collapsable(),
 
-                MenuSection::make('TIH', [
-                    MenuItem::resource(Ratih::class),
-                    MenuItem::resource(Viatura::class),
-                    MenuItem::resource(EquipeViatura::class),
-                    MenuItem::resource(Unidade::class),
-                    MenuItem::resource(Cargo::class),
-                    MenuItem::resource(User::class),
-                ])->icon('truck')->collapsable(),
-            ];
-        });
+        //         MenuSection::make('TIH', [
+        //             MenuItem::resource(Ratih::class),
+        //             MenuItem::resource(Viatura::class),
+        //             MenuItem::resource(EquipeViatura::class),
+        //             MenuItem::resource(Unidade::class),
+        //             MenuItem::resource(Cargo::class),
+        //             MenuItem::resource(User::class),
+        //         ])->icon('truck')->collapsable(),
+        //     ];
+        // });
     }
     
 

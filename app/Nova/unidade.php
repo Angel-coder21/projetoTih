@@ -9,7 +9,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Email;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class unidade extends Resource
+class Unidade extends Resource
 {
     /**
      * The model the resource corresponds to.

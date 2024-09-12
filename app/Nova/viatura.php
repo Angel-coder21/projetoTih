@@ -8,7 +8,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class viatura extends Resource
+class Viatura extends Resource
 {
     /**
      * The model the resource corresponds to.

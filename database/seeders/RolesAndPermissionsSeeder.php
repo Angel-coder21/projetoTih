@@ -19,15 +19,11 @@ class RolesAndPermissionsSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         $collection = collect([
-            'Invoice',
-            'Client',
-            'Contact',
-            'Payment',
-            'Team',
-            'User',
+            'NIR',
+            'Base Samu',
+            'Motorista/Medico',
             'Role',
             'Permission'
-            // ... // List all your Models you want to have Permissions for.
         ]);
 
         $collection->each(function ($item, $key) {
@@ -43,6 +39,26 @@ class RolesAndPermissionsSeeder extends Seeder
         // Create a Super-Admin Role and assign all Permissions
         $role = Role::create(['name' => 'super-admin']);
         $role->givePermissionTo(Permission::all());
+
+
+
+        $roleNir = Role::firstOrCreate(
+            ['name' => 'NIR'],
+            ['guard_name' => 'web']
+        );
+        $roleNir->givePermissionTo('viewAnyNIR', 'viewNIR', 'updateNIR', 'createNIR', 'deleteNIR', 'destroyNIR');
+
+        $roleBaseSamu = Role::firstOrCreate(
+            ['name' => 'Base Samu'],
+            ['guard_name' => 'web']
+        );
+        $roleBaseSamu->givePermissionTo('viewAnyBase Samu', 'viewBase Samu', 'updateBase Samu', 'createBase Samu', 'deleteBase Samu', 'destroyBase Samu');
+
+        $roleMM = Role::firstOrCreate(
+            ['name' => 'Motorista/Medico'],
+            ['guard_name' => 'web']
+        );
+        $roleMM->givePermissionTo('viewAnyMotorista/Medico', 'viewMotorista/Medico', 'updateMotorista/Medico', 'createMotorista/Medico', 'deleteMotorista/Medico', 'destroyMotorista/Medico');
 
         // Give User Super-Admin Role
         // $user = \App\Models\User::where('email', 'your@email.com')->first(); // Change this to your email.

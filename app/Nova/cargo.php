@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use PHPUnit\TextUI\XmlConfiguration\Group;
 
-class cargo extends Resource
+class Cargo extends Resource
 {
     /**
      * The model the resource corresponds to.
