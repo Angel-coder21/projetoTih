@@ -113,6 +113,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             (new \Sereny\NovaPermissions\NovaPermissions())->canSee(function ($request) {
                 return $request->user()->isAdmin();
             }),
+            
         ];
     }
 
