@@ -62,21 +62,11 @@ class Ratih extends Resource
         return [
             Tabs::make('Ratih', [
                 Tab::make(__('Unidade de Origem'), [
-                    ID::make()->sortable()
-                    ->hideFromIndex(),
 
-                    // Heading::make('Preenchimento do NIR '),
-                    
-                    // Select::make('Status do Chamado','fk_status')
-                    // ->searchable()
-                    // ->options(\App\Models\Status::all()->pluck('nome', 'id'))
-                    // ->displayUsingLabels(),
 
-                    // DateTime::make('Data Chamado','dt_chamado'),
+                    ID::make('Número do Chamado','id')->sortable(),
 
-                    Text::make('Número do Chamado' , 'numero_chamado')
-                    ->sortable()
-                    ->rules( 'max:255'),
+                    DateTime::make('Data do Chamado','dt_chamado'),
 
                     Text::make('Nome do Paciente' , 'paciente_nome')
                     ->sortable()
