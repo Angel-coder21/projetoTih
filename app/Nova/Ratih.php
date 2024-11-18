@@ -180,19 +180,19 @@ class Ratih extends Resource
                     Text::make('FC' , 'fc_origem')
                     ->sortable()
                     ->rules( 'max:255')
-                    ->placeholder('Frequência cardíaca')
+                    ->placeholder('Frequência Cardíaca')
                     ->hideFromIndex(),
 
                     Text::make('FR' , 'fr_origem')
                     ->sortable()
                     ->rules( 'max:255')
-                    ->placeholder('Frequência respiratória')
+                    ->placeholder('Frequência Respiratória')
                     ->hideFromIndex(),
 
                     Text::make('SpO2' , 'spo2_origem')
                     ->sortable()
                     ->rules( 'max:255')
-                    ->placeholder('saturação de oxigênio')
+                    ->placeholder('Saturação de Oxigênio')
                     ->hideFromIndex(),
 
                     Text::make('Glicemia' , 'glicemia_origem')
@@ -462,26 +462,31 @@ class Ratih extends Resource
                     Text::make('PA Sistólica' , 'pa_sitolica_destino')
                     ->sortable()
                     ->rules( 'max:255')
+                    ->placeholder('Pressão Arterial Sistólica')
                     ->hideFromIndex(),
 
                     Text::make('PA Diastólica' , 'pa_diastolicadestino')
                     ->sortable()
                     ->rules( 'max:255')
+                    ->placeholder('Pressão Arterial Diastólica')
                     ->hideFromIndex(),
         
                     Text::make('FC ' , 'fc_destino')
                     ->sortable()
                     ->rules( 'max:255')
+                    ->placeholder('Frequência Cardíaca')
                     ->hideFromIndex(),
         
                     Text::make('FR ' , 'fr_destino')
                     ->sortable()
                     ->rules( 'max:255')
+                    ->placeholder('Frequência Respiratória')
                     ->hideFromIndex(),
         
                     Text::make('SpO2 ' , 'spo2_destino')
                     ->sortable()
                     ->rules( 'max:255')
+                    ->placeholder('Saturação de Oxigênio')
                     ->hideFromIndex(),
         
                     Text::make('Glicemia ' , 'glicemia_destino')
