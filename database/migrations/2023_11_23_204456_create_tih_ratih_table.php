@@ -59,12 +59,15 @@ return new class extends Migration
             $table->longText('bomba_infusora_med_4_origem')->nullable();
             $table->longText('bomba_infusora_med_5_origem')->nullable();
             $table->enum('paciente_entubado_origem',['true','false'])->nullable();
+            $table->integer('classidicacao_glasgow_menor_origem')->nullable();
             $table->integer('glasgow_AO_menor_origem')->nullable();
             $table->integer('glasgow_rv_menor_origem')->nullable();
             $table->integer('glasgow_rm_menor_origem')->nullable();
+            $table->integer('classidicacao_glasgow_maior_origem')->nullable();
             $table->integer('glasgow_AO_maior_origem')->nullable();
             $table->integer('glasgow_rv_maior_origem')->nullable();
             $table->integer('glasgow_rm_maior_origem')->nullable();
+            $table->integer('classidicacao_rass_origem')->nullable();
             $table->integer('rass_1_origem')->nullable();
             $table->enum('autorizacao_transferencia_origem',['Entregue','Não Entregue','Não Tem'])->nullable();
             $table->enum('exame_procedimentos_origem',['Entregue','Não Entregue','Não Tem'])->nullable();
@@ -98,12 +101,15 @@ return new class extends Migration
             $table->longText('bomba_infusora_med_4_destino')->nullable();
             $table->longText('bomba_infusora_med_5_destino')->nullable();
             $table->enum('paciente_entubado_destino',['true','false'])->nullable();
+            $table->integer('classidicacao_glasgow_menor_destino')->nullable();
             $table->integer('glasgow_AO_menor_destino')->nullable();
             $table->integer('glasgow_rv_menor_destino')->nullable();
             $table->integer('glasgow_rm_menor_destino')->nullable();
+            $table->integer('classidicacao_glasgow_maior_destino')->nullable();
             $table->integer('glasgow_AO_maior_destino')->nullable();
             $table->integer('glasgow_rv_maior_destino')->nullable();
             $table->integer('glasgow_rm_maior_destino')->nullable();
+            $table->integer('classidicacao_rass_destino')->nullable();
             $table->integer('rass_1_destino')->nullable();
             $table->enum('autorizacao_transferencia_destino',['Entregue','Não Entregue','Não Tem'])->nullable();
             $table->enum('exame_procedimentos_destino',['Entregue','Não Entregue','Não Tem'])->nullable();
@@ -130,7 +136,9 @@ return new class extends Migration
             $table->dateTime('dt_rh_saida_unidade_destino')->nullable();
             $table->unsignedBigInteger('fk_user_rh_saida_unidade_destino')->nullable();
             $table->dateTime('dt_rh_chegada_base')->nullable();  
-            $table->unsignedBigInteger('fk_user_rh_chegada_base')->nullable();            
+            $table->unsignedBigInteger('fk_user_rh_chegada_base')->nullable();  
+            $table->unsignedBigInteger('fk_user_nir_origem')->nullable();
+            $table->unsignedBigInteger('fk_user_nir_destino')->nullable();        
             $table->timestamps();
 
 
@@ -144,6 +152,8 @@ return new class extends Migration
             $table->foreign('fk_user_rh_chegada_unidade_destino')->references('id')->on('users');
             $table->foreign('fk_user_rh_saida_unidade_destino')->references('id')->on('users');
             $table->foreign('fk_user_rh_chegada_base')->references('id')->on('users');
+            $table->foreign('fk_user_nir_origem')->references('id')->on('users');
+            $table->foreign('fk_user_nir_destino')->references('id')->on('users');
         });
     }
 

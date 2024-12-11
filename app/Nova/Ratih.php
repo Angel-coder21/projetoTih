@@ -22,6 +22,7 @@ use ShuvroRoy\NovaTabs\Tabs;
 use ShuvroRoy\NovaTabs\Traits\HasActionsInTabs;
 use ShuvroRoy\NovaTabs\Traits\HasTabs;
 
+
 class Ratih extends Resource
 {
     use HasTabs, HasActionsInTabs;
@@ -129,7 +130,7 @@ class Ratih extends Resource
                     ->options([
                         'exame'=> __('Exame de Imagem'),
                         'avancada'=>__('Avaliação'),
-                        'transferencia'=>__('Transferência Internaçãos'),
+                        'transferencia'=>__('Transferência Internação'),
                         'outros'=>__('Outros'),
                     ])->inline(),
 
@@ -272,6 +273,8 @@ class Ratih extends Resource
 
                     Heading::make('Escala de Coma de Glasgow - Crianças abaixo de 4 anos'),
 
+                    Number::make('Clasiificação de Glasgow','classidicacao_glasgow_menor_origem'),
+
                     Radio::make(__('Abertura ocular'), 'glasgow_AO_menor_origem')
                     ->options([
                         '4' => __('Abertura ocular espontânio'),
@@ -300,6 +303,8 @@ class Ratih extends Resource
                     ])->hideFromIndex(),
 
                     Heading::make('Escala de Coma de Glasgow - Adultos e crianças acima de 4 anos'),
+
+                    Number::make('Clasiificação de Glasgow','classidicacao_glasgow_maior_origem'),
 
                     Radio::make(__('Abertura ocular'), 'glasgow_AO_maior_origem')
                     ->options([
@@ -331,6 +336,8 @@ class Ratih extends Resource
                     ])->hideFromIndex(),
 
                     Heading::make('Escala de Coma de RASS'),
+
+                    Number::make('Clasiificação de Rass','classidicacao_rass_origem'),
 
                     Radio::make(__('Classificação de RASS'), 'rass_1_origem')
                     ->options([
@@ -561,6 +568,8 @@ class Ratih extends Resource
         
         
                     Heading::make('Escala de Coma de Glasgow - Crianças abaixo de 4 anos'),
+
+                    Number::make('Clasiificação de Glasgow','classidicacao_glasgow_menor_destino'),
         
                     Radio::make(__('Abertura ocular '), 'glasgow_AO_menor_destino')
                     ->options([
@@ -593,6 +602,8 @@ class Ratih extends Resource
                     ->hideFromIndex(),
         
                     Heading::make('Escala de Coma de Glasgow - Adultos e crianças acima de 4 anos'),
+
+                    Number::make('Clasiificação de Glasgow','classidicacao_glasgow_maior_destino'),
         
                     Radio::make(__('Abertura ocular '), 'glasgow_AO_maior_destino')
                     ->options([
@@ -627,6 +638,8 @@ class Ratih extends Resource
                     ->hideFromIndex(),
 
                     Heading::make('Escala de Coma de RASS'),
+
+                    Number::make('Clasiificação de Rass','classidicacao_rass_destino'),
 
                     Radio::make(__('Classificação de RASS'), 'rass_1_destino')
                     ->options([
@@ -762,7 +775,18 @@ class Ratih extends Resource
                     ->options(\App\Models\EquipeViatura::all()->pluck('equipe_viatura','id'))
                     ->displayUsingLabels()            
                     ->hideFromIndex(),
-        
+
+                    Select::make('Nir de Origem' , 'fk_user_nir_origem')
+                    ->searchable()
+                    ->options(\App\Models\User::all()->pluck('name','id'))
+                    ->displayUsingLabels()            
+                    ->hideFromIndex(),
+
+                    Select::make('Nir de Destino' , 'fk_user_nir_destino')
+                    ->searchable()
+                    ->options(\App\Models\User::all()->pluck('name','id'))
+                    ->displayUsingLabels()            
+                    ->hideFromIndex(),
     
                     Heading::make('Registro Saída da Base'),
         

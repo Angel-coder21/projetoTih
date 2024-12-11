@@ -44,15 +44,14 @@ class Unidade extends Resource
     {
         return [
             ID::make()->sortable(),
-
             
-            Select::make('Tipo' , 'tipo')
-            ->options([
-                'HOSPITAL' =>  'HOSPITAL',
-                'UBS' => 'UBS',
-                'UPH' => 'UPH',
-                'UPA' => 'UPA',
-            ]),
+            // Select::make('Tipo' , 'tipo')
+            // ->options([
+            //     'HOSPITAL' =>  'HOSPITAL',
+            //     'UBS' => 'UBS',
+            //     'UPH' => 'UPH',
+            //     'UPA' => 'UPA',
+            // ]),
 
             Text::make('Nome' , 'nome')
             ->sortable()
