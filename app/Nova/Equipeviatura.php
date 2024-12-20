@@ -16,7 +16,7 @@ class Equipeviatura extends Resource
      *
      * @var class-string<\App\Models\Equipeviatura>
      */
-    public static $model = \App\Models\Equipeviatura::class;
+    public static $model = \App\Models\EquipeViatura::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
