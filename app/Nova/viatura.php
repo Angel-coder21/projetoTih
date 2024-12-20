@@ -15,7 +15,7 @@ class Viatura extends Resource
      *
      * @var class-string<\App\Models\viatura>
      */
-    public static $model = \App\Models\viatura::class;
+    public static $model = \App\Models\Viatura::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
