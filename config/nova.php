@@ -7,6 +7,8 @@ use Laravel\Nova\Http\Middleware\BootTools;
 use Laravel\Nova\Http\Middleware\DispatchServingNovaEvent;
 use Laravel\Nova\Http\Middleware\HandleInertiaRequests;
 
+$link = env('APP_URL');
+
 return [
 
     /*
@@ -162,15 +164,14 @@ return [
     |
     */
 
-    // 'brand' => [
-    //     'logo' => resource_path('/img/example-logo.svg'),
+    'brand' => [
+        'logo' => resource_path('/img/logo-dc.svg'),
+        'logo_src' => $link.'/img/logo-dc-azul.png',
+        'logo_src_dark' => $link.'/img/logo-dc-dark.png', // optional
+        'logo_href' => $link."/admin",
+        'logo_class' => 'h-10',
 
-    //     'colors' => [
-    //         "400" => "24, 182, 155, 0.5",
-    //         "500" => "24, 182, 155",
-    //         "600" => "24, 182, 155, 0.75",
-    //     ]
-    // ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
