@@ -60,7 +60,7 @@ class Equipeviatura extends Resource
 
             Select::make('Viatura' , 'fk_viatura')
             ->searchable()
-            ->options(\App\Models\viatura::where('situacao',' 1')->get()->pluck('identificacao', 'id'))
+            ->options(\App\Models\Viatura::where('situacao',' 1')->get()->pluck('identificacao', 'id'))
             ->displayUsingLabels(),
 
             Select::make('Condutor' , 'fk_user_condutor')
