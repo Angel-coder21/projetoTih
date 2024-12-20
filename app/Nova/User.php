@@ -64,12 +64,18 @@ class User extends Resource
             Select::make('Unidade' , 'fk_unidade')
             ->searchable()
             ->options(\App\Models\Unidade::all()->pluck('nome', 'id'))
-            ->displayUsingLabels(),
+            ->displayUsingLabels()
+            ->readonly(function ($request) {
+                return !$request->user()->hasRole(['super-admin']);
+            }),
 
             Select::make('Cargo' , 'fk_cargo')
             ->searchable()
             ->options(\App\Models\Cargo::all()->pluck('nome_cargo', 'id'))
-            ->displayUsingLabels(),
+            ->displayUsingLabels()
+            ->readonly(function ($request) {
+                return !$request->user()->hasRole(['super-admin']);
+            }),
 
             Radio::make(__('Documento'), 'tipo_documento')
             ->options([
@@ -105,6 +111,21 @@ class User extends Resource
                '0'=>__('Desativado'),
             ])->inline(),
         ];
+    }
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+
+        if ($request->user()->hasRole('super-admin')) {
+            return $query;
+        }
+
+        if ($request->user()->hasRole('CordenadorNir')) {         
+            return $query->where('fk_unidade', $request->user()->fk_unidade);
+        }
+
+
+        return $query->where('id', $request->user()->id);
     }
 
     /**

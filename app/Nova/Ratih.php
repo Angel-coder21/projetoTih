@@ -873,18 +873,18 @@ class Ratih extends Resource
            
         ]),
 
-
-
-            
-
-
-
-          
-
-
-
-
         ];
+    }
+
+
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+      
+        return $query->where(function ($q) use ($request) {
+            $q->where('fk_unidade_origem', $request->user()->fk_unidade)
+              ->orWhere('fk_unidade_destino', $request->user()->fk_unidade);
+        });     
+
     }
 
     /**

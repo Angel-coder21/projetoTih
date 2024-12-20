@@ -41,8 +41,6 @@ class UserPolicy
             return true;
         }elseif ($user->hasRole('Base Samu') && $user->hasPermissionTo('viewBase Samu') ) {
             return true;
-        }elseif ($user->hasRole('NIR') && $user->hasPermissionTo('viewNIR')) {
-            return true;
         }else{
             return false;
         }
@@ -60,7 +58,7 @@ class UserPolicy
             return true;
         }elseif ($user->hasRole('Base Samu') && $user->hasPermissionTo('createBase Samu')) {
             return true;
-        }elseif ($user->hasRole('NIR') && $user->hasPermissionTo('createNIR')) {
+        }elseif ($user->hasRole('CordenadorNir') && $user->hasPermissionTo('createNIR')) {
             return true;
         }else{
             return false;
@@ -100,7 +98,7 @@ class UserPolicy
             return true;
         }elseif ($user->hasRole('Base Samu') && $user->hasPermissionTo('deleteBase Samu')) {
             return true;
-        }elseif ($user->hasRole('NIR') && $user->hasPermissionTo('deleteNIR')) {
+        }elseif ($user->hasRole('CordenadorNir') && $user->hasPermissionTo('deleteNIR')) {
             return true;
         }else{
             return false;
@@ -120,7 +118,7 @@ class UserPolicy
             return true;
         }elseif ($user->hasRole('Base Samu') && $user->hasPermissionTo('deleteBase Samu')) {
             return true;
-        }elseif ($user->hasRole('NIR') && $user->hasPermissionTo('deleteNIR')) {
+        }elseif ($user->hasRole('CordenadorNir') && $user->hasPermissionTo('deleteNIR')) {
             return true;
         }else{
             return false;
