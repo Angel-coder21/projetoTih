@@ -1305,8 +1305,8 @@ class Ratih extends Resource
     public static function indexQuery(NovaRequest $request, $query)
     {
 
-        //Motoristas/Medicos podem ver apenas os chamados que a equipe_viatura é a deles
-        if ($request->user()->hasRole(['Motorista/Medico'])) {
+        //Motoristas/Medicos podem ver apenas os chamados que a equipe_viatura é a deles, existe uma modal Equipevitura que é vinculada a um user
+        if ($request->user()->hasRole(['Motorista','Medico'])) {
             return $query->where('fk_tih_equipe_viatura', $request->user()->fk_equipe_viatura);
         }
 
