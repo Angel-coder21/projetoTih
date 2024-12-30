@@ -1306,7 +1306,7 @@ class Ratih extends Resource
     {
 
         // Se o usuário for super-admin, ele pode ver todos os chamados
-        if ($request->user()->hasRole(['super-admin'])) {
+        if ($request->user()->hasRole(['super-admin','Base Samu','Motorista/Medico'])) {
             return $query;
         }
       
