@@ -1308,8 +1308,12 @@ class Ratih extends Resource
     {
 
         if ($request->user()->hasRole(['Motorista/Medico'])) {
-            $equipeViatura = EquipeViatura::where('fk_user_condutor',$request->user()->id)->first();
-            return $query->where('fk_tih_equipe_viatura', $equipeViatura->id);
+            return $query->whereHas('equipeViatura', function ($q) use ($request) {
+                $q->where('fk_user_condutor', $request->user()->id)
+                  ->orWhere('fk_user_medico', $request->user()->id)
+                  ->orWhere('fk_user_enfermeiro', $request->user()->id)
+                  ->orWhere('fk_user_tec_enfermagem', $request->user()->id);
+            });
         }
 
         // Se o usuário for super-admin, ele pode ver todos os chamados

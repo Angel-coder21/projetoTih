@@ -149,4 +149,9 @@ class Ratih extends Model
 
         
      ];
+
+     public function equipeViatura()
+    {
+        return $this->belongsTo(EquipeViatura::class, 'fk_tih_equipe_viatura');
+    }
 }
