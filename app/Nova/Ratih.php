@@ -21,6 +21,8 @@ use ShuvroRoy\NovaTabs\Tab;
 use ShuvroRoy\NovaTabs\Tabs;
 use ShuvroRoy\NovaTabs\Traits\HasActionsInTabs;
 use ShuvroRoy\NovaTabs\Traits\HasTabs;
+use App\Models\EquipeViatura;
+use Illuminate\Support\Facades\Log;
 
 
 class Ratih extends Resource
@@ -1305,9 +1307,9 @@ class Ratih extends Resource
     public static function indexQuery(NovaRequest $request, $query)
     {
 
-        //Motoristas/Medicos podem ver apenas os chamados que a equipe_viatura é a deles, existe uma modal Equipevitura que é vinculada a um user
-        if ($request->user()->hasRole(['Motorista','Medico'])) {
-            return $query->where('fk_tih_equipe_viatura', $request->user()->fk_equipe_viatura);
+        if ($request->user()->hasRole(['Motorista/Medico'])) {
+            $equipeViatura = EquipeViatura::where('fk_user_condutor',$request->user()->id)->first();
+            return $query->where('fk_tih_equipe_viatura', $equipeViatura->id);
         }
 
         // Se o usuário for super-admin, ele pode ver todos os chamados
