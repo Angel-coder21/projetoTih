@@ -329,7 +329,7 @@ class Ratih extends Resource
                         return $this->modUnidadeOrigem($request);                      
                     }),
 
-                    Boolean::make('Coletor Nasal','coletor_nasal_origem')
+                    Boolean::make('Cateter Nasal','coletor_nasal_origem')
                     ->trueValue('true')
                     ->falseValue('False')
                     ->hideFromIndex()
@@ -338,7 +338,7 @@ class Ratih extends Resource
                     }),
                     
                     
-                    Textarea::make('Anotação Coletor Nasal','coletor_nasal_anotacao_origem')
+                    Textarea::make('Anotação Catater Nasal','coletor_nasal_anotacao_origem')
                     ->rows(1)
                     ->readonly(function (NovaRequest $request) {                    
                         return $this->modUnidadeOrigem($request);                      
