@@ -307,7 +307,7 @@ class Ratih extends Resource
                         return $this->modUnidadeOrigem($request);                      
                     }),
 
-                    Text::make('Taxa' , 'taxa_origem')
+                    Text::make('Tax' , 'taxa_origem')
                     ->sortable()
                     ->rules( 'max:255')
                     ->hideFromIndex()
